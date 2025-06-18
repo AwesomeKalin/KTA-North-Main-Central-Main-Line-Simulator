@@ -70,3 +70,6 @@ compile_commands.json
 # Android
 *apk*
 android.*
+
+KTA 北幹、中央幹綫模擬 KTA North Main, Central Main Line Simulator.sb3
+project.json
