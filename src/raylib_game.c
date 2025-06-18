@@ -13,44 +13,21 @@
 
 #include "raylib.h"
 #include "stdint.h"
+#include "globals.h"
+#include "sprite2.h"
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
 #endif
-
-enum Backgrounds {
-    bg_night_city_with_street,
-    bg_unnamed,
-    bg_backdrop1,
-    bg_menu,
-    bg_screenshot_2024_07_02_at_2,
-    bg_station_select,
-    bg_screenshot_2024_07_04_at_2,
-    bg_route1,
-    bg_route2,
-    bg_route3,
-    bg_route4
-};
 
 //----------------------------------------------------------------------------------
 // Shared Variables Definition (global)
 // NOTE: Those variables are shared between modules through screens.h
 //----------------------------------------------------------------------------------
 
-// Backgrounds
-Texture2D night_city_with_street_svg;
-Texture2D unnamed;
-Texture2D menu_svg;
-Texture2D screenshot_2024_07_02_at_2;
-Texture2D station_select_svg;
-Texture2D screenshot_2024_07_04_at_2_svg;
-Texture2D route1_svg;
-Texture2D route2_svg;
-Texture2D route3_svg;
-Texture2D route4_svg;
-enum Backgrounds currentBackground = bg_menu;
 
 // Global Variables
+Backgrounds currentBackground = bg_menu;
 bool isDoorOpen = true;
 uint8_t route = 3;
 uint8_t status = 1;
@@ -190,20 +167,36 @@ int list_sp4[] = {
     110000
 };
 
+char* tempRoute[] = { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
+int tempSP[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
 //----------------------------------------------------------------------------------
 // Local Variables Definition (local to this module)
 //----------------------------------------------------------------------------------
 static const int screenWidth = 480;
 static const int screenHeight = 360;
 
+static Texture2D night_city_with_street_svg;
+static Texture2D unnamed;
+static Texture2D menu_svg;
+static Texture2D screenshot_2024_07_02_at_2;
+static Texture2D station_select_svg;
+static Texture2D screenshot_2024_07_04_at_2_svg;
+static Texture2D route1_svg;
+static Texture2D route2_svg;
+static Texture2D route3_svg;
+static Texture2D route4_svg;
+
+static Music matrix;
+
 //----------------------------------------------------------------------------------
 // Local Functions Declaration
 //----------------------------------------------------------------------------------
-static void UpdateDrawFrame(void);    // Update and draw one frame
-static void DrawBackground(void);     // Draws the background
-static void LoadGameTextures(void);   // Loads Game Textures
-static void UnloadGameTextures(void); // Unloads Game Textures
-static void UnloadVars(void);         // Unloads Variables
+static void UpdateDrawFrame(void);     // Update and draw one frame
+static void DrawBackground(void);      // Draws the background
+static void LoadGameTextures(void);    // Loads Game Textures
+static void LoadGameAudio(void);       // Loads game audio
+static void UnloadGameResources(void); // Unloads Game Textures
 
 //----------------------------------------------------------------------------------
 // Main entry point
@@ -217,6 +210,14 @@ int main(void)
     LoadGameTextures();
 
     InitAudioDevice();      // Initialize audio device
+    LoadGameAudio();
+
+    // Sprite Setup
+    Sprite2OnLoad();
+
+    matrix.looping = true;
+    SetMusicVolume(matrix, 0.5f);
+    PlayMusicStream(matrix);
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 30, 1);
@@ -227,6 +228,7 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
+        UpdateMusicStream(matrix);
         UpdateDrawFrame();
     }
 #endif
@@ -235,8 +237,7 @@ int main(void)
     //--------------------------------------------------------------------------------------
     // Unload current screen data before closing
     // Unload global data loaded
-    UnloadGameTextures();
-    UnloadVars();
+    UnloadGameResources();
 
     CloseAudioDevice();     // Close audio context
 
@@ -252,6 +253,9 @@ static void UpdateDrawFrame(void)
     BeginDrawing();
 
     DrawBackground();
+
+    // Sprite Loops
+    Sprite2Loop();
 
     EndDrawing();
 }
@@ -318,7 +322,11 @@ static void LoadGameTextures(void) {
     route4_svg = LoadTexture("resources/route4.svg.png");
 }
 
-static void UnloadGameTextures(void) {
+static void LoadGameAudio(void) {
+    matrix = LoadMusicStream("resources/matrix.wav");
+}
+
+static void UnloadGameResources(void) {
     // Backgrounds
     UnloadTexture(night_city_with_street_svg);
     UnloadTexture(unnamed);
@@ -332,15 +340,16 @@ static void UnloadGameTextures(void) {
     UnloadTexture(route4_svg);
 }
 
-static void UnloadVars(void) {
-    // Global Variables
-    free(thisStation);
-    free(text);
-    free(nextStation);
+void MainMenu(void) {
+    currentBackground = bg_menu;
+    thisStation = "卡波綜合交通樞紐 Kapple Transportation Resort";
+    speed = 0;
+    text = "";
+    nextStation = "--";
+    distance = 0;
+    stationNo = 1;
+}
 
-    // Global Lists
-    free(list_route1);
-    free(list_route2);
-    free(list_route3);
-    free(list_route4);
+void MainGameStart(void) {
+
 }
