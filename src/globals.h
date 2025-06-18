@@ -53,8 +53,10 @@ extern int tempSP[16];
 //----------------------------------------------------------------------------------
 // Global Functions Declaration
 //----------------------------------------------------------------------------------
-void MainMenu(void);
-void MainGameStart(void);
+void Startup(void);
+void SetRoute(void);
+void Menu(void);
+void GameStart(void);
 
 #ifdef __cplusplus
 }

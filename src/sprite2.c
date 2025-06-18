@@ -15,12 +15,12 @@ static void putRouteInTempRoute(int amountOfStations);
 static void setStationPositions(int amount);
 
 void Sprite2OnLoad(void) {
-	// Broadcast Start up Message
+	Startup();
 }
 
 void Sprite2SelectRoute(void) {
 	route = 1;
-	// Broadcast Select Route Message
+	SetRoute();
 }
 
 void Sprite2Loop(void) {

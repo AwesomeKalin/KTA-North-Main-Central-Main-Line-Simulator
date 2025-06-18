@@ -15,6 +15,7 @@
 #include "stdint.h"
 #include "globals.h"
 #include "sprite2.h"
+#include "startButton.h"
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
@@ -198,6 +199,9 @@ static void LoadGameTextures(void);    // Loads Game Textures
 static void LoadGameAudio(void);       // Loads game audio
 static void UnloadGameResources(void); // Unloads Game Textures
 
+static void MainMenu(void);            // Menu Event
+static void MainGameStart(void);       // Game start
+
 //----------------------------------------------------------------------------------
 // Main entry point
 //----------------------------------------------------------------------------------
@@ -256,6 +260,7 @@ static void UpdateDrawFrame(void)
 
     // Sprite Loops
     Sprite2Loop();
+    StartButtonLoop();
 
     EndDrawing();
 }
@@ -320,6 +325,9 @@ static void LoadGameTextures(void) {
     route2_svg = LoadTexture("resources/route2.svg.png");
     route3_svg = LoadTexture("resources/route3.svg.png");
     route4_svg = LoadTexture("resources/route4.svg.png");
+
+    // Sprites
+    LoadStartButtonTextures();
 }
 
 static void LoadGameAudio(void) {
@@ -340,7 +348,7 @@ static void UnloadGameResources(void) {
     UnloadTexture(route4_svg);
 }
 
-void MainMenu(void) {
+static void MainMenu(void) {
     currentBackground = bg_menu;
     thisStation = "卡波綜合交通樞紐 Kapple Transportation Resort";
     speed = 0;
@@ -350,6 +358,22 @@ void MainMenu(void) {
     stationNo = 1;
 }
 
-void MainGameStart(void) {
+static void MainGameStart(void) {
 
+}
+
+void Startup(void) {
+
+}
+
+void SetRoute(void) {
+
+}
+
+void Menu(void) {
+    MainMenu();
+}
+
+void GameStart(void) {
+    MainGameStart();
 }

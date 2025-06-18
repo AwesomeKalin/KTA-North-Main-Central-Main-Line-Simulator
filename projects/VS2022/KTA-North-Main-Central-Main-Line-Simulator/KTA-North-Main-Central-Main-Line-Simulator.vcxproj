@@ -361,6 +361,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\raylib_game.c" />
     <ClCompile Include="..\..\..\src\sprite2.c" />
+    <ClCompile Include="..\..\..\src\startButton.c" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\..\src\raylib_game.rc" />
@@ -368,6 +369,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\src\globals.h" />
     <ClInclude Include="..\..\..\src\sprite2.h" />
+    <ClInclude Include="..\..\..\src\startButton.h" />
     <ClInclude Include="globals.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
