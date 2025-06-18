@@ -71,7 +71,6 @@ jobs:
         
         # Build raylib arm64 static
         make PLATFORM=PLATFORM_DESKTOP RAYLIB_LIBTYPE=STATIC CUSTOM_CFLAGS="-target arm64-apple-macos11 -DGL_SILENCE_DEPRECATION" -B
-        mv -v -f libraylib.a libraylib_arm64.a
         make clean
 
     - name: Build Product
