@@ -34,7 +34,7 @@ void Sprite2SelectStation(void) {
 }
 
 void Sprite2SetRoute(void) {
-	memset(tempRoute, "", sizeof(tempRoute));
+	memset(tempRoute, 0, sizeof(tempRoute));
 	memset(tempSP, 0, sizeof(tempSP));
 
 	switch (route) {
