@@ -3,6 +3,8 @@
 #include "sprite2.h"
 #include "string.h"
 
+#define ARRAY_LEN(x) (sizeof(x) / sizeof((x)[0]))
+
 //----------------------------------------------------------------------------------
 // Local Variables Definition (local to this module)
 //----------------------------------------------------------------------------------
@@ -14,17 +16,16 @@ static bool isBackgroundLoop = false;
 static void putRouteInTempRoute(int amountOfStations);
 static void setStationPositions(int amount);
 
-void Sprite2OnLoad(void) {
-	Startup();
-}
-
 void Sprite2SelectRoute(void) {
 	route = 1;
 	SetRoute();
+	isBackgroundLoop = true;
 }
 
 void Sprite2Loop(void) {
-	if (isBackgroundLoop) currentBackground = route + 6;
+	if (isBackgroundLoop) {
+		currentBackground = route + 6;
+	};
 }
 
 void Sprite2SelectStation(void) {
@@ -38,30 +39,30 @@ void Sprite2SetRoute(void) {
 
 	switch (route) {
 		case 1:
-			putRouteInTempRoute(sizeof(list_route1));
-			setStationPositions(sizeof(list_sp1));
+			putRouteInTempRoute(ARRAY_LEN(list_route1));
+			setStationPositions(ARRAY_LEN(list_sp1));
 			break;
 
 		case 2:
-			putRouteInTempRoute(sizeof(list_route2));
-			setStationPositions(sizeof(list_sp2));
+			putRouteInTempRoute(ARRAY_LEN(list_route2));
+			setStationPositions(ARRAY_LEN(list_sp2));
 			break;
 
 		case 3:
-			putRouteInTempRoute(sizeof(list_route3));
-			setStationPositions(sizeof(list_sp3));
+			putRouteInTempRoute(ARRAY_LEN(list_route3));
+			setStationPositions(ARRAY_LEN(list_sp3));
 			break;
 
 		case 4:
-			putRouteInTempRoute(sizeof(list_route4));
-			setStationPositions(sizeof(list_sp4));
+			putRouteInTempRoute(ARRAY_LEN(list_route4));
+			setStationPositions(ARRAY_LEN(list_sp4));
 			break;
 	}
 }
 
 void Sprite2Menu(void) {
-	memset(tempRoute, "", sizeof(tempRoute));
-	memset(tempSP, 0, sizeof(tempSP));
+	memset(tempRoute, "", ARRAY_LEN(tempRoute));
+	memset(tempSP, 0, ARRAY_LEN(tempSP));
 }
 
 static void putRouteInTempRoute(int amountOfStations) {

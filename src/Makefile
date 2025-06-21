@@ -34,7 +34,9 @@ PROJECT_VERSION       ?= 1.0
 PROJECT_BUILD_PATH    ?= .
 PROJECT_SOURCE_FILES  ?= \
     raylib_game.c \
-	sprite2.c
+	sprite2.c     \
+	startButton.c \
+	button1.c
 
 # raylib library variables
 RAYLIB_SRC_PATH       ?= ../../raylib/src

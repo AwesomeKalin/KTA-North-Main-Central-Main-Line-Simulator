@@ -3,6 +3,7 @@
 
 #include "stdint.h"
 #include "stdbool.h"
+#include "raylib.h"
 
 //----------------------------------------------------------------------------------
 // Types and Structures Definition
@@ -36,6 +37,7 @@ extern char* thisStation;
 extern uint8_t stationNo;
 extern float distance;
 extern float speed;
+extern Sound coin;
 
 // Global Lists
 extern char* list_route1[17];
@@ -53,10 +55,13 @@ extern int tempSP[16];
 //----------------------------------------------------------------------------------
 // Global Functions Declaration
 //----------------------------------------------------------------------------------
-void Startup(void);
 void SetRoute(void);
 void Menu(void);
-void GameStart(void);
+void SelectRoute(void);
+void SelectStation(void);
+void Tutorial(void);
+void Lose(void);
+void Win(void);
 
 #ifdef __cplusplus
 }

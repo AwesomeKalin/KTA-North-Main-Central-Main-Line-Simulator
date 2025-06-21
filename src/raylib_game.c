@@ -16,6 +16,8 @@
 #include "globals.h"
 #include "sprite2.h"
 #include "startButton.h"
+#include "text.h"
+#include "button1.h"
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
@@ -38,6 +40,7 @@ char* thisStation = "卡波綜合交通樞紐 Kapple Transportation Resort";
 uint8_t stationNo = 1;
 float distance = 0.0f;
 float speed = 0.0f;
+Sound coin;
 
 // Global Lists
 char* list_route1[] = {
@@ -200,7 +203,6 @@ static void LoadGameAudio(void);       // Loads game audio
 static void UnloadGameResources(void); // Unloads Game Textures
 
 static void MainMenu(void);            // Menu Event
-static void MainGameStart(void);       // Game start
 
 //----------------------------------------------------------------------------------
 // Main entry point
@@ -217,9 +219,7 @@ int main(void)
     LoadGameAudio();
 
     // Sprite Setup
-    Sprite2OnLoad();
 
-    matrix.looping = true;
     SetMusicVolume(matrix, 0.5f);
     PlayMusicStream(matrix);
 
@@ -255,12 +255,14 @@ int main(void)
 static void UpdateDrawFrame(void)
 {
     BeginDrawing();
-
+    ClearBackground(BLANK);
     DrawBackground();
 
     // Sprite Loops
     Sprite2Loop();
     StartButtonLoop();
+    Button1Loop();
+    TextLoop(); // Last thing to process
 
     EndDrawing();
 }
@@ -328,10 +330,15 @@ static void LoadGameTextures(void) {
 
     // Sprites
     LoadStartButtonTextures();
+    LoadTextTextures();
+    LoadButton1Textures();
 }
 
 static void LoadGameAudio(void) {
     matrix = LoadMusicStream("resources/matrix.wav");
+    matrix.looping = true;
+
+    coin = LoadSound("resources/coin.wav");
 }
 
 static void UnloadGameResources(void) {
@@ -346,6 +353,15 @@ static void UnloadGameResources(void) {
     UnloadTexture(route2_svg);
     UnloadTexture(route3_svg);
     UnloadTexture(route4_svg);
+
+    // Audio
+    UnloadMusicStream(matrix);
+    UnloadSound(coin);
+
+    // Sprites
+    UnloadStartButtonResources();
+    UnloadTextResources();
+    UnloadButton1Resources();
 }
 
 static void MainMenu(void) {
@@ -358,22 +374,40 @@ static void MainMenu(void) {
     stationNo = 1;
 }
 
-static void MainGameStart(void) {
-
-}
-
-void Startup(void) {
-
-}
-
 void SetRoute(void) {
+    Sprite2SetRoute();
+}
 
+void SelectRoute(void) {
+    Sprite2SelectRoute();
+    Button1SelectRoute();
+}
+
+void SelectStation(void) {
+    Sprite2SelectStation();
+    Button1SelectStation();
 }
 
 void Menu(void) {
+    Sprite2Menu();
     MainMenu();
+    StartButtonMenu();
+    TextMenu();
+    Button1Menu();
 }
 
-void GameStart(void) {
-    MainGameStart();
+void Tutorial(void) {
+    StartButtonTutorial();
+}
+
+void Lose(void) {
+    TextLose();
+}
+
+void Win(void) {
+    TextWin();
+}
+
+void TrainButton(void) {
+    Button1TrainButton();
 }

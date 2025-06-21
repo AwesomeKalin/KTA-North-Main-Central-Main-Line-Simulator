@@ -6,6 +6,9 @@
 //----------------------------------------------------------------------------------
 void LoadStartButtonTextures(void);
 void StartButtonLoop(void);
+void UnloadStartButtonResources(void);
+void StartButtonMenu(void);
+void StartButtonTutorial(void);
 
 #ifdef __cplusplus
 }

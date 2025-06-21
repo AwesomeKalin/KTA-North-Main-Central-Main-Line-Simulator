@@ -1,14 +1,15 @@
-#ifndef SPRITE2_H
-#define SPRITE2_H
+#ifndef TEXT_H
+#define TEXT_H
 
 //----------------------------------------------------------------------------------
 // Global Functions Declaration
 //----------------------------------------------------------------------------------
-void Sprite2SelectRoute(void);
-void Sprite2Loop(void);
-void Sprite2SelectStation(void);
-void Sprite2SetRoute(void);
-void Sprite2Menu(void);
+void LoadTextTextures(void);
+void UnloadTextResources(void);
+void TextLoop(void);
+void TextMenu(void);
+void TextLose(void);
+void TextWin(void);
 
 #ifdef __cplusplus
 }
