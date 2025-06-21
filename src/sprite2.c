@@ -61,7 +61,7 @@ void Sprite2SetRoute(void) {
 }
 
 void Sprite2Menu(void) {
-	memset(tempRoute, "", ARRAY_LEN(tempRoute));
+	memset(tempRoute, 0, ARRAY_LEN(tempRoute));
 	memset(tempSP, 0, ARRAY_LEN(tempSP));
 }
 
