@@ -20,9 +20,9 @@ jobs:
 
     env:
       PROJECT_NAME: ${{ github.event.repository.name }}
-      PROJECT_BUILD_PATH: ".\\projects\\VS2022\\build\\${{ github.event.repository.name }}\\bin\\x64\\Release"
+      PROJECT_BUILD_PATH: "${{ github.event.repository.name }}\\projects\\VS2022\\build\\${{ github.event.repository.name }}\\bin\\x64\\Release"
       PROJECT_RELEASE_PATH: ${{ github.event.repository.name }}_dev_win_x64
-      PROJECT_RESOURCES_PATH: src/resources
+      PROJECT_RESOURCES_PATH: resources
 
     steps:
     - name: Checkout this repo
