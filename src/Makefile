@@ -33,11 +33,14 @@ PROJECT_NAME          ?= KTA-North-Main-Central-Main-Line-Simulator
 PROJECT_VERSION       ?= 1.0
 PROJECT_BUILD_PATH    ?= .
 PROJECT_SOURCE_FILES  ?= \
-    raylib_game.c \
-	sprite2.c     \
-	startButton.c \
-	button1.c     \
-	text.c
+    raylib_game.c   \
+	sprite2.c       \
+	startButton.c   \
+	button1.c       \
+	text.c          \
+	button2.c       \
+	goButton.c      \
+	stationSelect.c
 
 # raylib library variables
 RAYLIB_SRC_PATH       ?= ../../raylib/src

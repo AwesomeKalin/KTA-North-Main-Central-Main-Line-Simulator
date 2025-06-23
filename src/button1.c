@@ -1,15 +1,16 @@
 #include "raylib.h"
 #include "globals.h"
 #include "button1.h"
+#include "stdint.h"
 
 //----------------------------------------------------------------------------------
 // Local Variables Definition (local to this module)
 //----------------------------------------------------------------------------------
 static Texture2D button1_svg;
 static bool visible = false;
-static int16_t posX = 118;
-static int16_t posY = 388;
-static Rectangle button = { 118, 388, 64, 64 };
+static uint16_t posX = 118;
+static uint16_t posY = 56;
+static Rectangle button = { 118, 56, 64, 64 };
 static float size = 1.0f;
 static bool isSelecting = false;
 
@@ -26,9 +27,8 @@ void Button1Loop(void) {
 		DrawTextureEx(button1_svg, (Vector2){ posX, posY }, 0.0f, size, WHITE);
 
 		Vector2 mouse = GetMousePosition();
-
 		if (CheckCollisionPointRec(mouse, button)) {
-			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+			isHoveringButton = true;
 
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				if (isSelecting) {
@@ -48,9 +48,6 @@ void Button1Loop(void) {
 					}
 				}
 			}
-		}
-		else {
-			SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 		}
 	}
 }

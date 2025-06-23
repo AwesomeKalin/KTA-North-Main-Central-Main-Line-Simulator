@@ -38,6 +38,8 @@ extern uint8_t stationNo;
 extern float distance;
 extern float speed;
 extern Sound coin;
+extern bool isHoveringButton;
+extern Font font;
 
 // Global Lists
 extern char* list_route1[17];
@@ -62,6 +64,8 @@ void SelectStation(void);
 void Tutorial(void);
 void Lose(void);
 void Win(void);
+void TrainButton(void);
+size_t IntArrayLengthUntilZero(const int* arr, size_t max_len);
 
 #ifdef __cplusplus
 }

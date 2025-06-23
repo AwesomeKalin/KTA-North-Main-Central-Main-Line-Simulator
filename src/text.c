@@ -30,15 +30,12 @@ void TextLoop(void) {
 		DrawTexture(*currentCostume, posX, posY, WHITE);
 		Vector2 mouse = GetMousePosition();
 		if (CheckCollisionPointRec(mouse, button)) {
-			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+			isHoveringButton = true;
 
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				Menu();
 				visible = false;
 			}
-		}
-		else {
-			SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 		}
 	}
 }

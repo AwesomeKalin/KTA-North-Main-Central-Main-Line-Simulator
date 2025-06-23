@@ -1,4 +1,4 @@
-﻿/*******************************************************************************************
+/*******************************************************************************************
 *
 *   raylib game template
 *
@@ -18,6 +18,10 @@
 #include "startButton.h"
 #include "text.h"
 #include "button1.h"
+#include "button2.h"
+#include "goButton.h"
+#include "stationSelect.h"
+#include "locale.h"
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
@@ -41,6 +45,8 @@ uint8_t stationNo = 1;
 float distance = 0.0f;
 float speed = 0.0f;
 Sound coin;
+bool isHoveringButton = false;
+Font font;
 
 // Global Lists
 char* list_route1[] = {
@@ -171,8 +177,8 @@ int list_sp4[] = {
     110000
 };
 
-char* tempRoute[] = { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
-int tempSP[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+char* tempRoute[17] = { 0 };
+int tempSP[16] = { 0 };
 
 //----------------------------------------------------------------------------------
 // Local Variables Definition (local to this module)
@@ -212,8 +218,10 @@ int main(void)
     // Initialization
     //---------------------------------------------------------
     InitWindow(screenWidth, screenHeight, "KTA North Main, Central Main Line Simulator");
+    setlocale(LC_ALL, "");
 
     LoadGameTextures();
+    font = LoadFontEx("resources/notoSans.ttf", 20, 0, 30890);
 
     InitAudioDevice();      // Initialize audio device
     LoadGameAudio();
@@ -258,11 +266,23 @@ static void UpdateDrawFrame(void)
     ClearBackground(BLANK);
     DrawBackground();
 
+    isHoveringButton = false;
+
     // Sprite Loops
     Sprite2Loop();
     StartButtonLoop();
     Button1Loop();
+    Button2Loop();
+    GoButtonLoop();
+    StationSelectLoop();
     TextLoop(); // Last thing to process
+
+    if (isHoveringButton) {
+        SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+    }
+    else {
+        SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+    }
 
     EndDrawing();
 }
@@ -332,10 +352,13 @@ static void LoadGameTextures(void) {
     LoadStartButtonTextures();
     LoadTextTextures();
     LoadButton1Textures();
+    LoadButon2Textures();
+    LoadGoButtonTextures();
+    LoadStationSelectTextures();
 }
 
 static void LoadGameAudio(void) {
-    matrix = LoadMusicStream("resources/matrix.wav");
+    matrix = LoadMusicStream("resources/matrix.mp3");
     matrix.looping = true;
 
     coin = LoadSound("resources/coin.wav");
@@ -358,10 +381,16 @@ static void UnloadGameResources(void) {
     UnloadMusicStream(matrix);
     UnloadSound(coin);
 
+    // Font
+    UnloadFont(font);
+
     // Sprites
     UnloadStartButtonResources();
     UnloadTextResources();
     UnloadButton1Resources();
+    UnloadButton2Resources();
+    UnloadGoButtonResources();
+    UnloadStationSelectResources();
 }
 
 static void MainMenu(void) {
@@ -381,11 +410,15 @@ void SetRoute(void) {
 void SelectRoute(void) {
     Sprite2SelectRoute();
     Button1SelectRoute();
+    Button2SelectRoute();
+    GoButtonSelectRoute();
 }
 
 void SelectStation(void) {
     Sprite2SelectStation();
     Button1SelectStation();
+    Button2SelectStation();
+    StationSelectSelectStation();
 }
 
 void Menu(void) {
@@ -394,10 +427,13 @@ void Menu(void) {
     StartButtonMenu();
     TextMenu();
     Button1Menu();
+    Button2Menu();
+    GoButtonMenu();
 }
 
 void Tutorial(void) {
     StartButtonTutorial();
+    GoButtonTutorial();
 }
 
 void Lose(void) {
@@ -410,4 +446,11 @@ void Win(void) {
 
 void TrainButton(void) {
     Button1TrainButton();
+    Button2TrainButton();
+}
+
+size_t IntArrayLengthUntilZero(const int* arr, size_t max_len) {
+    size_t i = 0;
+    while (i < max_len && arr[i] != 0) i++;
+    return i;
 }

@@ -6,6 +6,9 @@
     <ClCompile Include="..\..\..\src\startButton.c" />
     <ClCompile Include="..\..\..\src\text.c" />
     <ClCompile Include="..\..\..\src\button1.c" />
+    <ClCompile Include="..\..\..\src\button2.c" />
+    <ClCompile Include="..\..\..\src\goButton.c" />
+    <ClCompile Include="..\..\..\src\stationSelect.c" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\..\src\raylib_game.rc" />
@@ -17,5 +20,8 @@
     <ClInclude Include="..\..\..\src\startButton.h" />
     <ClInclude Include="..\..\..\src\text.h" />
     <ClInclude Include="..\..\..\src\button1.h" />
+    <ClInclude Include="..\..\..\src\button2.h" />
+    <ClInclude Include="..\..\..\src\goButton.h" />
+    <ClInclude Include="..\..\..\src\stationSelect.h" />
   </ItemGroup>
 </Project>
