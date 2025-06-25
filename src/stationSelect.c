@@ -2,6 +2,7 @@
 #include "globals.h"
 #include "stationSelect.h"
 #include "stdint.h"
+#include "string.h"
 
 #define ARRAY_LEN(x) (sizeof(x) / sizeof((x)[0]))
 #define STATION_CHECK(x,y) (strcmp(tempRoute[x], y) == 0)
