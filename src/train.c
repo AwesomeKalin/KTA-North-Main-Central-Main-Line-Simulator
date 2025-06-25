@@ -127,7 +127,7 @@ void TrainLoop(void) {
 		}
 
         if (textFrames == 60) {
-            strcpy_s(text, MAX_TRAIN_TEXT_LEN, "請按空格鍵或按列車關門。Press Space key to close the train doors.");
+            TextCopy(text, "請按空格鍵或按列車關門。Press Space key to close the train doors.");
             textFrames++;
         }
 
@@ -136,7 +136,7 @@ void TrainLoop(void) {
         }
 
         if (textFrames == 61 && !isDoorOpen) {
-            strcpy_s(text, MAX_TRAIN_TEXT_LEN, "請按→鍵發車。Press → key to accelerate.");
+            TextCopy(text, "請按→鍵發車。Press → key to accelerate.");
             textFrames++;
             TrainStart();
             waitForSpeed = true;
@@ -196,7 +196,7 @@ void TrainLoop(void) {
 
         if (waitForSpeed && speed > 0) {
             waitForSpeed = false;
-            strcpy_s(text, MAX_TRAIN_TEXT_LEN, "--");
+            TextCopy(text, "--");
             waitForCloseToStation = true;
         }
 
@@ -204,7 +204,7 @@ void TrainLoop(void) {
             waitForCloseToStation = false;
             const char* tempText = TextFormat("請適當按←鍵剎車並停在行駛距離%d和%d之間。Press ← key to brake and stop between Distance %d and %d.", tempSP[stationNo] - 1000, tempSP[stationNo], tempSP[stationNo] - 1000, tempSP[stationNo]);
         
-            strcpy_s(text, MAX_TRAIN_TEXT_LEN, tempText);
+            TextCopy(text, tempText);
         }
 
 		DrawTextBoxed(font, text, lineWrapHelper, 20.0f, 1.0f, true, WHITE);
@@ -221,7 +221,7 @@ void TrainGameStart(void) {
 	visible = true;
 	isTrainDriving = true;
 
-    strcpy_s(text, MAX_TRAIN_TEXT_LEN, "感謝 @LPPTra 、 @Isps170207 和 @KR_11 的原作。Thanks to @LPPTra, @lsps170207 and @KR_11 for the original works.");
+    TextCopy(text, "感謝 @LPPTra 、 @Isps170207 和 @KR_11 的原作。Thanks to @LPPTra, @lsps170207 and @KR_11 for the original works.");
     textFrames = 0;
 }
 
@@ -229,7 +229,7 @@ void TrainMenu(void) {
 	isTrainDriving = false;
 	visible = false;
 	isDoorOpen = true;
-    strcpy_s(text, MAX_TRAIN_TEXT_LEN, "--");
+    TextCopy(text, "--");
     keyboardAcceleration = false;
 }
 

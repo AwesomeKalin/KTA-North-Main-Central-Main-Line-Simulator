@@ -405,7 +405,7 @@ static void MainMenu(void) {
     currentBackground = bg_menu;
     thisStation = "卡波綜合交通樞紐 Kapple Transportation Resort";
     speed = 0;
-    strcpy_s(text, MAX_TRAIN_TEXT_LEN, "");
+    TextCopy(text, "");
     nextStation = "--";
     distance = 0;
     stationNo = 1;
