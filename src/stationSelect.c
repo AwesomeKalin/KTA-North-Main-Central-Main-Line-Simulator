@@ -88,6 +88,14 @@ void StationSelectLoop(void) {
 			if (CheckCollisionPointRec(mouse, clones[i].rectangle)) {
 				isHoveringButton = true;
 				DrawTextEx(font, tempRoute[clones[i].stationNo], (Vector2){ (480 - MeasureTextEx(font, tempRoute[clones[i].stationNo], 20, 1).x) / 2, 295 }, 20, 1, BLACK);
+
+				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					PlaySound(coin);
+					stationNo = clones[i].stationNo;
+					thisStation = tempRoute[clones[i].stationNo];
+
+					GameStart();
+				}
 			}
 		}
 	}
@@ -149,4 +157,9 @@ void StationSelectSelectStation(void) {
 
 		cloneAmount++;
 	}
+}
+
+void StationSelectGameStart(void) {
+	memset(clones, 0, sizeof(clones));
+	cloneAmount = 0;
 }

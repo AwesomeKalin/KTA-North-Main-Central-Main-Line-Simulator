@@ -31,8 +31,8 @@ void Button2Loop(void) {
 		if (CheckCollisionPointRec(mouse, button)) {
 			isHoveringButton = true;
 
-			if (isSelectingRoute) {
-				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+				if (isSelectingRoute) {
 					SetRoute();
 					PlaySound(coin);
 					if (route > 3) {
@@ -42,9 +42,9 @@ void Button2Loop(void) {
 						route++;
 					}
 				}
-			}
-			else {
-				if (speed < 80 && isDoorOpen == false) speed += 0.2f;
+				else {
+					if (speed < 80.0f && isDoorOpen == false) speed += 0.2f;
+				}
 			}
 		}
 	}

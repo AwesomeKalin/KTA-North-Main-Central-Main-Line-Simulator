@@ -22,6 +22,7 @@
 #include "goButton.h"
 #include "stationSelect.h"
 #include "locale.h"
+#include "train.h"
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
@@ -39,7 +40,7 @@ bool isDoorOpen = true;
 uint8_t route = 3;
 uint8_t status = 1;
 char* nextStation = "--";
-char* text = "";
+char text[MAX_TRAIN_TEXT_LEN] = "";
 char* thisStation = "卡波綜合交通樞紐 Kapple Transportation Resort";
 uint8_t stationNo = 1;
 float distance = 0.0f;
@@ -209,6 +210,7 @@ static void LoadGameAudio(void);       // Loads game audio
 static void UnloadGameResources(void); // Unloads Game Textures
 
 static void MainMenu(void);            // Menu Event
+static void MainGameStart(void);
 
 //----------------------------------------------------------------------------------
 // Main entry point
@@ -221,7 +223,7 @@ int main(void)
     setlocale(LC_ALL, "");
 
     LoadGameTextures();
-    font = LoadFontEx("resources/notoSans.ttf", 20, 0, 30890);
+    font = LoadFontEx("resources/notoSans.ttf", 30, 0, 30890);
 
     InitAudioDevice();      // Initialize audio device
     LoadGameAudio();
@@ -271,10 +273,11 @@ static void UpdateDrawFrame(void)
     // Sprite Loops
     Sprite2Loop();
     StartButtonLoop();
-    Button1Loop();
-    Button2Loop();
     GoButtonLoop();
     StationSelectLoop();
+    TrainLoop();
+    Button1Loop();
+    Button2Loop();
     TextLoop(); // Last thing to process
 
     if (isHoveringButton) {
@@ -355,6 +358,7 @@ static void LoadGameTextures(void) {
     LoadButon2Textures();
     LoadGoButtonTextures();
     LoadStationSelectTextures();
+    LoadTrainTextures();
 }
 
 static void LoadGameAudio(void) {
@@ -362,6 +366,8 @@ static void LoadGameAudio(void) {
     matrix.looping = true;
 
     coin = LoadSound("resources/coin.wav");
+
+    LoadTrainAudio();
 }
 
 static void UnloadGameResources(void) {
@@ -391,16 +397,21 @@ static void UnloadGameResources(void) {
     UnloadButton2Resources();
     UnloadGoButtonResources();
     UnloadStationSelectResources();
+    UnloadTrainResources();
 }
 
 static void MainMenu(void) {
     currentBackground = bg_menu;
     thisStation = "卡波綜合交通樞紐 Kapple Transportation Resort";
     speed = 0;
-    text = "";
+    strcpy_s(text, MAX_TRAIN_TEXT_LEN, "");
     nextStation = "--";
     distance = 0;
     stationNo = 1;
+}
+
+static void MainGameStart(void) {
+    currentBackground = bg_night_city_with_street;
 }
 
 void SetRoute(void) {
@@ -429,6 +440,7 @@ void Menu(void) {
     Button1Menu();
     Button2Menu();
     GoButtonMenu();
+    TrainMenu();
 }
 
 void Tutorial(void) {
@@ -447,6 +459,18 @@ void Win(void) {
 void TrainButton(void) {
     Button1TrainButton();
     Button2TrainButton();
+}
+
+void GameStart(void) {
+    StationSelectGameStart();
+    Button1GameStart();
+    TrainGameStart();
+    MainGameStart();
+}
+
+void TrainStart(void) {
+    Button1TrainStart();
+    TrainTrainStart();
 }
 
 size_t IntArrayLengthUntilZero(const int* arr, size_t max_len) {

@@ -40,7 +40,8 @@ PROJECT_SOURCE_FILES  ?= \
 	text.c          \
 	button2.c       \
 	goButton.c      \
-	stationSelect.c
+	stationSelect.c \
+	train.c
 
 # raylib library variables
 RAYLIB_SRC_PATH       ?= ../../raylib/src

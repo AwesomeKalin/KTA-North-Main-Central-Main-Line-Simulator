@@ -61,8 +61,8 @@ void Sprite2SetRoute(void) {
 }
 
 void Sprite2Menu(void) {
-	memset(tempRoute, 0, ARRAY_LEN(tempRoute));
-	memset(tempSP, 0, ARRAY_LEN(tempSP));
+	memset(tempRoute, 0, sizeof(tempRoute));
+	memset(tempSP, 0, sizeof(tempSP));
 }
 
 static void putRouteInTempRoute(int amountOfStations) {

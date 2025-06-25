@@ -1,14 +1,16 @@
-#ifndef STATIONSELECT_H
-#define STATIONSELECT_H
+#ifndef TRAIN_H
+#define TRAIN_H
 
 //----------------------------------------------------------------------------------
 // Global Functions Declaration
 //----------------------------------------------------------------------------------
-void LoadStationSelectTextures(void);
-void UnloadStationSelectResources(void);
-void StationSelectLoop(void);
-void StationSelectSelectStation(void);
-void StationSelectGameStart(void);
+void LoadTrainTextures(void);
+void UnloadTrainResources(void);
+void TrainLoop(void);
+void TrainGameStart(void);
+void LoadTrainAudio(void);
+void TrainMenu(void);
+void TrainTrainStart(void);
 
 #ifdef __cplusplus
 }

@@ -30,7 +30,7 @@ void Button1Loop(void) {
 		if (CheckCollisionPointRec(mouse, button)) {
 			isHoveringButton = true;
 
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
 				if (isSelecting) {
 					SetRoute();
 					PlaySound(coin);
@@ -43,7 +43,7 @@ void Button1Loop(void) {
 					}
 				}
 				else {
-					if (speed > 0 && !isDoorOpen) {
+					if (speed > 0.0f && !isDoorOpen) {
 						speed -= 0.3f;
 					}
 				}
@@ -79,4 +79,12 @@ void Button1TrainButton(void) {
 
 	visible = true;
 	isSelecting = false;
+}
+
+void Button1GameStart(void) {
+	TrainButton();
+}
+
+void Button1TrainStart(void) {
+	TrainButton();
 }

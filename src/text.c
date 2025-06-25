@@ -9,10 +9,11 @@
 static Texture2D win_svg;
 static Texture2D lose_svg;
 static bool visible = false;
-static const uint16_t posX = 164;
-static const uint16_t posY = 162;
+static const uint16_t posX = 11;
+static const uint16_t posY = 125;
 static Texture2D* currentCostume;
-static const Rectangle button = { 164, 162, 153, 37 };
+static const Rectangle button = { 11, 125, 459, 111 };
+static uint8_t cooldownFrames = 0;
 
 void LoadTextTextures(void) {
 	win_svg = LoadTexture("resources/win.svg.png");
@@ -28,14 +29,21 @@ void UnloadTextResources(void) {
 void TextLoop(void) {
 	if (visible) {
 		DrawTexture(*currentCostume, posX, posY, WHITE);
-		Vector2 mouse = GetMousePosition();
-		if (CheckCollisionPointRec(mouse, button)) {
-			isHoveringButton = true;
 
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-				Menu();
-				visible = false;
+		if (cooldownFrames == 15) {
+			Vector2 mouse = GetMousePosition();
+			if (CheckCollisionPointRec(mouse, button)) {
+				isHoveringButton = true;
+
+				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					Menu();
+					visible = false;
+					cooldownFrames = 0;
+				}
 			}
+		}
+		else {
+			cooldownFrames++;
 		}
 	}
 }

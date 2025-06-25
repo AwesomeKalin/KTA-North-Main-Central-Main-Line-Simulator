@@ -1,5 +1,6 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
+#define MAX_TRAIN_TEXT_LEN 512
 
 #include "stdint.h"
 #include "stdbool.h"
@@ -32,7 +33,7 @@ extern bool isDoorOpen;
 extern uint8_t route;
 extern uint8_t status;
 extern char* nextStation;
-extern char* text;
+extern char text[MAX_TRAIN_TEXT_LEN];
 extern char* thisStation;
 extern uint8_t stationNo;
 extern float distance;
@@ -65,6 +66,8 @@ void Tutorial(void);
 void Lose(void);
 void Win(void);
 void TrainButton(void);
+void GameStart(void);
+void TrainStart(void);
 size_t IntArrayLengthUntilZero(const int* arr, size_t max_len);
 
 #ifdef __cplusplus
