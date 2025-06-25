@@ -5,6 +5,7 @@
 #include "stdint.h"
 #include "stdbool.h"
 #include "raylib.h"
+#include "stddef.h"
 
 //----------------------------------------------------------------------------------
 // Types and Structures Definition

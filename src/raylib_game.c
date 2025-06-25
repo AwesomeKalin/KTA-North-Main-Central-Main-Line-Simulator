@@ -23,6 +23,7 @@
 #include "stationSelect.h"
 #include "locale.h"
 #include "train.h"
+#include "stddef.h"
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
