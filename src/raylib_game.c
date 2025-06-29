@@ -479,3 +479,13 @@ size_t IntArrayLengthUntilZero(const int* arr, size_t max_len) {
     while (i < max_len && arr[i] != 0) i++;
     return i;
 }
+
+size_t count_non_null(void* const* array, size_t len) {
+    size_t count = 0;
+    for (size_t i = 0; i < len; ++i) {
+        if (array[i] != NULL) {
+            count++;
+        }
+    }
+    return count;
+}

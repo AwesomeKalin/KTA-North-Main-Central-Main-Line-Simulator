@@ -4,7 +4,6 @@
 #include "stdint.h"
 #include "string.h"
 
-#define ARRAY_LEN(x) (sizeof(x) / sizeof((x)[0]))
 #define STATION_CHECK(x,y) (strcmp(tempRoute[x], y) == 0)
 
 //----------------------------------------------------------------------------------
@@ -103,7 +102,7 @@ void StationSelectLoop(void) {
 }
 
 void StationSelectSelectStation(void) {
-	for (uint8_t i = 0; i < IntArrayLengthUntilZero(tempRoute, ARRAY_LEN(tempRoute)); i++) {
+	for (uint8_t i = 0; i < IntArrayLengthUntilZero(tempRoute, count_non_null(tempRoute, 17)); i++) {
 		if (STATION_CHECK(i, "卡波綜合交通樞紐 Kapple Transportation Resort")) {
 			clones[i] = (StationSelectClone){ (Rectangle){ 46, 49, 25, 56 }, true, &kappleTransportationResort, i};
 		}

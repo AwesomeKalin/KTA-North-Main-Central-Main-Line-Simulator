@@ -4,8 +4,6 @@
 #include "stdint.h"
 #include "string.h"
 
-#define ARRAY_LEN(x) (sizeof(x) / sizeof((x)[0]))
-
 //----------------------------------------------------------------------------------
 // Local Variables Definition (local to this module)
 //----------------------------------------------------------------------------------
@@ -34,6 +32,11 @@ static bool train2Sounds = false;
 static uint8_t train2Frames = 0;
 static bool waitForSpeed = false;
 static bool waitForCloseToStation = false;
+static bool waitForAtStation = false;
+static int doorTimer = 0;
+static bool runTimer = false;
+static bool waitForDoorsOpen = false;
+static bool waitForDoorsClose = false;
 
 //----------------------------------------------------------------------------------
 // Local Functions Declaration
@@ -92,7 +95,7 @@ void TrainLoop(void) {
 					isDoorOpening = false;
 					openingFrames = 0;
 
-					if (stationNo == ARRAY_LEN(tempRoute)) {
+					if (stationNo == (count_non_null(tempRoute, 17) - 1)) {
 						Win();
 						isTrainDriving = false;
 					}
@@ -205,6 +208,65 @@ void TrainLoop(void) {
             const char* tempText = TextFormat("請適當按←鍵剎車並停在行駛距離%d和%d之間。Press ← key to brake and stop between Distance %d and %d.", tempSP[stationNo] - 1000, tempSP[stationNo], tempSP[stationNo] - 1000, tempSP[stationNo]);
         
             TextCopy(text, tempText);
+            waitForAtStation = true;
+        }
+
+        if (waitForAtStation && (distance > tempSP[stationNo] - 1000 && speed == 0)) {
+            waitForAtStation = false;
+
+            stationNo++;
+            thisStation = tempRoute[stationNo];
+            
+            TextCopy(text, "成功靠站，請按空格鍵或按列車開門。Stopped at station successfully. Press Space key to open the train doors.");
+
+            waitForDoorsOpen = true;
+        }
+
+        if (waitForAtStation && distance > tempSP[stationNo]) {
+            waitForAtStation = false;
+
+            TextCopy(text, "未能成功靠站，遊戲結束。Failed to stop at station, game over!");
+            Lose();
+
+            isTrainDriving = false;
+            keyboardAcceleration = false;
+        }
+
+        if (waitForDoorsOpen && isDoorOpen) {
+            waitForDoorsOpen = false;
+            TextCopy(text, "請保持車門開啟並等待 10 秒。 Please keep the doors open for at least 10 seconds.");
+            runTimer = true;
+            doorTimer = 0;
+        }
+
+        if (runTimer) {
+            if (doorTimer > 300) {
+                runTimer = false;
+                TextCopy(text, "請按空格鍵或按列車關門。Press Space key to close the train doors.");
+                waitForDoorsClose = true;
+            }
+            else if (!isDoorOpen) {
+                runTimer = false;
+
+                TextCopy(text, "在上下客過程中突然關門，遊戲結束。Train doors closed before 10 seconds, game over!");
+
+                Lose();
+
+                isTrainDriving = false;
+                keyboardAcceleration = false;
+            }
+            else {
+                doorTimer++;
+            }
+        }
+
+        if (waitForDoorsClose && !isDoorOpen) {
+            waitForDoorsClose = false;
+            distance = 0;
+            
+            TextCopy(text, "請按→鍵發車。Press → key to accelerate.");
+            waitForSpeed = true;
+            TrainStart();
         }
 
 		DrawTextBoxed(font, text, lineWrapHelper, 20.0f, 1.0f, true, WHITE);

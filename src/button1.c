@@ -30,7 +30,7 @@ void Button1Loop(void) {
 		if (CheckCollisionPointRec(mouse, button)) {
 			isHoveringButton = true;
 
-			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				if (isSelecting) {
 					SetRoute();
 					PlaySound(coin);

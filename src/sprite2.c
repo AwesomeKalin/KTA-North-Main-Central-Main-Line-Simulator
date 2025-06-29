@@ -3,8 +3,6 @@
 #include "sprite2.h"
 #include "string.h"
 
-#define ARRAY_LEN(x) (sizeof(x) / sizeof((x)[0]))
-
 //----------------------------------------------------------------------------------
 // Local Variables Definition (local to this module)
 //----------------------------------------------------------------------------------
@@ -39,23 +37,23 @@ void Sprite2SetRoute(void) {
 
 	switch (route) {
 		case 1:
-			putRouteInTempRoute(ARRAY_LEN(list_route1));
-			setStationPositions(ARRAY_LEN(list_sp1));
+			putRouteInTempRoute(17);
+			setStationPositions(16);
 			break;
 
 		case 2:
-			putRouteInTempRoute(ARRAY_LEN(list_route2));
-			setStationPositions(ARRAY_LEN(list_sp2));
+			putRouteInTempRoute(17);
+			setStationPositions(16);
 			break;
 
 		case 3:
-			putRouteInTempRoute(ARRAY_LEN(list_route3));
-			setStationPositions(ARRAY_LEN(list_sp3));
+			putRouteInTempRoute(10);
+			setStationPositions(9);
 			break;
 
 		case 4:
-			putRouteInTempRoute(ARRAY_LEN(list_route4));
-			setStationPositions(ARRAY_LEN(list_sp4));
+			putRouteInTempRoute(10);
+			setStationPositions(9);
 			break;
 	}
 }
