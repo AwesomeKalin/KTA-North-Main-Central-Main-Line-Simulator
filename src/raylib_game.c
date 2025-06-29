@@ -24,6 +24,7 @@
 #include "locale.h"
 #include "train.h"
 #include "stddef.h"
+#include "background.h"
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
@@ -360,6 +361,7 @@ static void LoadGameTextures(void) {
     LoadGoButtonTextures();
     LoadStationSelectTextures();
     LoadTrainTextures();
+    LoadBackgroundTextures();
 }
 
 static void LoadGameAudio(void) {
@@ -399,6 +401,7 @@ static void UnloadGameResources(void) {
     UnloadGoButtonResources();
     UnloadStationSelectResources();
     UnloadTrainResources();
+    UnloadBackgroundResources();
 }
 
 static void MainMenu(void) {

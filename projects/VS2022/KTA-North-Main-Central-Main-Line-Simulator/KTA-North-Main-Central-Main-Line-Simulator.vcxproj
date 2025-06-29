@@ -359,6 +359,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\background.c" />
     <ClCompile Include="..\..\..\src\button1.c" />
     <ClCompile Include="..\..\..\src\button2.c" />
     <ClCompile Include="..\..\..\src\goButton.c" />
@@ -373,6 +374,7 @@
     <ResourceCompile Include="..\..\..\src\raylib_game.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\background.h" />
     <ClInclude Include="..\..\..\src\button1.h" />
     <ClInclude Include="..\..\..\src\button2.h" />
     <ClInclude Include="..\..\..\src\globals.h" />
