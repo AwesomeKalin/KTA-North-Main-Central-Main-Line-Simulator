@@ -3,7 +3,6 @@
 #include "background.h"
 #include "stdint.h"
 #include "math.h"
-#include "string.h"
 
 //----------------------------------------------------------------------------------
 // Local Types and Structures Definition
