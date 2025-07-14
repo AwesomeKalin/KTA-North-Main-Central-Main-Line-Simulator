@@ -26,6 +26,7 @@
 #include "stddef.h"
 #include "background.h"
 #include "math.h"
+#include "nextStop.h"
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
@@ -282,6 +283,7 @@ static void UpdateDrawFrame(void)
     TrainLoop();
     Button1Loop();
     Button2Loop();
+    NextStopLoop();
     TextLoop(); // Last thing to process
 
     if (isHoveringButton) {
@@ -364,6 +366,7 @@ static void LoadGameTextures(void) {
     LoadStationSelectTextures();
     LoadTrainTextures();
     LoadBackgroundTextures();
+    LoadNextStopTextures();
 }
 
 static void LoadGameAudio(void) {
@@ -404,6 +407,7 @@ static void UnloadGameResources(void) {
     UnloadStationSelectResources();
     UnloadTrainResources();
     UnloadBackgroundResources();
+    UnloadNextStopResources();
 }
 
 static void MainMenu(void) {
@@ -448,6 +452,7 @@ void Menu(void) {
     GoButtonMenu();
     TrainMenu();
     BackgroundMenu();
+    NextStopMenu();
 }
 
 void Tutorial(void) {
@@ -474,6 +479,7 @@ void GameStart(void) {
     TrainGameStart();
     MainGameStart();
     BackgroundGameStart();
+    NextStopGameStart();
 }
 
 void TrainStart(void) {
@@ -506,4 +512,12 @@ double js_mod(double a, double b) {
         m += b;
     }
     return m;
+}
+
+int getPositionOfValueInCharArray(char* array[], char* value, int length) {
+    for (int i = 0; i < length; i++) {
+        if (array[i] == value) return i;
+    }
+
+    return 0;
 }
