@@ -71,6 +71,7 @@ void GameStart(void);
 void TrainStart(void);
 size_t IntArrayLengthUntilZero(const int* arr, size_t max_len);
 size_t count_non_null(void* const* array, size_t len);
+double js_mod(double a, double b);
 
 #ifdef __cplusplus
 }

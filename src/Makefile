@@ -41,7 +41,8 @@ PROJECT_SOURCE_FILES  ?= \
 	button2.c       \
 	goButton.c      \
 	stationSelect.c \
-	train.c
+	train.c         \
+	background.c
 
 # raylib library variables
 RAYLIB_SRC_PATH       ?= ../../raylib/src

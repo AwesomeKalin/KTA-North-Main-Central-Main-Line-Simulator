@@ -1,6 +1,18 @@
 #include "raylib.h"
 #include "globals.h"
 #include "background.h"
+#include "stdint.h"
+#include "math.h"
+
+//----------------------------------------------------------------------------------
+// Local Types and Structures Definition
+//----------------------------------------------------------------------------------
+typedef struct BackgroundClone {
+	int16_t posX;
+	uint16_t posY;
+	bool visible;
+	Texture2D* costume;
+} BackgroundClone;
 
 //----------------------------------------------------------------------------------
 // Local Variables Definition (local to this module)
@@ -41,6 +53,18 @@ static Texture2D conby;
 static Texture2D ferringdon;
 static Texture2D upnor_2;
 static Texture2D diplo_green;
+static BackgroundClone clones[1] = { 0 };
+static uint8_t cloneCount = 0;
+static int16_t posX = 0;
+static uint16_t posY = 0;
+static Texture2D* currentCostume;
+static bool visible = false;
+static bool loop = false;
+
+//----------------------------------------------------------------------------------
+// Local Functions Declaration
+//----------------------------------------------------------------------------------
+static Texture2D* GetCostumeByStationName(char* name);
 
 void LoadBackgroundTextures(void) {
 	ground = LoadTexture("resources/ground.png");
@@ -118,4 +142,150 @@ void UnloadBackgroundResources(void) {
 	UnloadTexture(ferringdon);
 	UnloadTexture(upnor_2);
 	UnloadTexture(diplo_green);
+}
+
+void BackgroundLoop(void) {
+	if (visible) {
+		DrawTexture(*currentCostume, posX, posY, WHITE);
+		DrawTexture(*clones[0].costume, clones[0].posX, clones[0].posY, WHITE);
+
+		if (loop) {
+			if (distance > tempSP[stationNo] - 11000) thisStation = nextStation;
+			if (posX < -470 || posX > 470) {
+				if ((distance < 200 || distance > tempSP[stationNo] - 7000) && distance < tempSP[stationNo]) {
+					status = 1;
+				}
+				else status = 2;
+
+				if (status == 1) {
+					currentCostume = GetCostumeByStationName(thisStation);
+				}
+
+				if (status == 2) {
+					if (nextStation == "烏普諾 Upnor" ||
+						nextStation == "費林登 Ferringdon" ||
+						nextStation == "力丁 Lefting" ||
+						nextStation == "首都國際機場二號大樓 Capital International Airport Terminal 2" ||
+						nextStation == "機場東 Airport East" ||
+						nextStation == "新開始河 Fresh Start Lake" ||
+						nextStation == "兵和 Binworth" ||
+						nextStation == "加爾斯 Giles" ||
+						nextStation == "蓮比西 Reckby West"
+						) {
+						currentCostume = &ground2;
+					}
+					else {
+						currentCostume = &ground;
+					}
+				}
+			}
+
+			if (clones[0].posX < -470 || clones[0].posX > 470) {
+				if ((distance < 200 || distance > tempSP[stationNo] - 7000) && distance < tempSP[stationNo]) {
+					status = 1;
+				}
+				else status = 2;
+
+				if (status == 1) {
+					clones[0].costume = GetCostumeByStationName(thisStation);
+				}
+
+				if (status == 2) {
+					if (nextStation == "烏普諾 Upnor" ||
+						nextStation == "費林登 Ferringdon" ||
+						nextStation == "力丁 Lefting" ||
+						nextStation == "首都國際機場二號大樓 Capital International Airport Terminal 2" ||
+						nextStation == "機場東 Airport East" ||
+						nextStation == "新開始河 Fresh Start Lake" ||
+						nextStation == "兵和 Binworth" ||
+						nextStation == "加爾斯 Giles" ||
+						nextStation == "蓮比西 Reckby West"
+						) {
+						clones[0].costume = &ground2;
+					}
+					else {
+						clones[0].costume = &ground;
+					}
+				}
+			}
+
+			posX = (480 - js_mod(distance, 960));
+			clones[0].posX = (480 - js_mod(distance - 480, 960));
+		}
+	}
+}
+
+void BackgroundGameStart(void) {
+	cloneCount++;
+	clones[0] = (BackgroundClone){ 480, 0, true, GetCostumeByStationName(tempRoute[stationNo])};
+
+	currentCostume = GetCostumeByStationName(tempRoute[stationNo]);
+	distance = 0;
+	visible = true;
+	loop = true;
+}
+
+void BackgroundMenu(void) {
+	visible = false;
+	posX = 0;
+	posY = 0;
+	memset(clones, 0, sizeof(clones));
+	cloneCount = 0;
+}
+
+static Texture2D* GetCostumeByStationName(char* name) {
+	if (name == "卡波綜合交通樞紐 Kapple Transportation Resort") {
+		return &kapple_transportation_resort_2;
+	}
+	else if (name == "哈冰火車站 Happing Train Station") {
+		return &happing_train_station_2;
+	}
+	else if (name == "迪普綠 Diplo Green") {
+		return &diplo_green;
+	}
+	else if (name == "烏普諾 Upnor") {
+		return &upnor_2;
+	}
+	else if (name == "費林登 Ferringdon") {
+		return &ferringdon;
+	}
+	else if (name == "康比 Conby") {
+		return &conby;
+	}
+	else if (name == "力丁 Lefting") {
+		return &lefting;
+	}
+	else if (name == "首都國際機場二號大樓 Capital International Airport Terminal 2") {
+		return &capital_international_airport_terminal_2_2;
+	}
+	else if (name == "機場東 Airport East") {
+		return &airport_east;
+	}
+	else if (name == "新開始河 Fresh Start Lake") {
+		return &fresh_start_lake_2;
+	}
+	else if (name == "兵和 Binworth") {
+		return &binworth_2;
+	}
+	else if (name == "加爾斯 Giles") {
+		return &giles;
+	}
+	else if (name == "蓮比西 Reckby West") {
+		return &reckby_west;
+	}
+	else if (name == "石頭鎮 Stone Village") {
+		return &stone_village;
+	}
+	else if (name == "小鵝河 Siu Hor River") {
+		return &siu_hor_river;
+	}
+	else if (name == "博法頓 Profacton") {
+		return &profacton;
+	}
+	else if (name == "樹林山 Forest Heights") {
+		return &forest_heights_2;
+	}
+	else {
+		return &kapple_transportation_resort_2;
+	}
 }

@@ -214,7 +214,7 @@ void TrainLoop(void) {
         if (waitForAtStation && (distance > tempSP[stationNo] - 1000 && speed == 0)) {
             waitForAtStation = false;
 
-            stationNo++;
+            //stationNo++;
             thisStation = tempRoute[stationNo];
             
             TextCopy(text, "成功靠站，請按空格鍵或按列車開門。Stopped at station successfully. Press Space key to open the train doors.");
@@ -261,6 +261,7 @@ void TrainLoop(void) {
         }
 
         if (waitForDoorsClose && !isDoorOpen) {
+            stationNo++;
             waitForDoorsClose = false;
             distance = 0;
             
@@ -269,7 +270,7 @@ void TrainLoop(void) {
             TrainStart();
         }
 
-		DrawTextBoxed(font, text, lineWrapHelper, 20.0f, 1.0f, true, WHITE);
+		DrawTextBoxed(font, text, lineWrapHelper, 20.0f, 1.0f, true, BLACK);
         DrawTextEx(font, TextFormat(" % .1f", speed), (Vector2){ 0, 330 }, 30.0f, 1.0f, WHITE);
         DrawTextEx(font, "Speed", (Vector2){ 0, 300 }, 30.0f, 1.0f, WHITE);
         DrawTextEx(font, TextFormat(" % .1f", distance), (Vector2){ 0, 270 }, 30.0f, 1.0f, WHITE);

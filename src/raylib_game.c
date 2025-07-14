@@ -25,6 +25,7 @@
 #include "train.h"
 #include "stddef.h"
 #include "background.h"
+#include "math.h"
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
@@ -277,6 +278,7 @@ static void UpdateDrawFrame(void)
     StartButtonLoop();
     GoButtonLoop();
     StationSelectLoop();
+    BackgroundLoop();
     TrainLoop();
     Button1Loop();
     Button2Loop();
@@ -445,6 +447,7 @@ void Menu(void) {
     Button2Menu();
     GoButtonMenu();
     TrainMenu();
+    BackgroundMenu();
 }
 
 void Tutorial(void) {
@@ -470,6 +473,7 @@ void GameStart(void) {
     Button1GameStart();
     TrainGameStart();
     MainGameStart();
+    BackgroundGameStart();
 }
 
 void TrainStart(void) {
@@ -491,4 +495,15 @@ size_t count_non_null(void* const* array, size_t len) {
         }
     }
     return count;
+}
+
+double js_mod(double a, double b) {
+    double m = fmod(a, b);
+    if (m < 0 && b > 0) {
+        m += b;
+    }
+    else if (m > 0 && b < 0) {
+        m += b;
+    }
+    return m;
 }
