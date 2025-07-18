@@ -43,7 +43,8 @@ PROJECT_SOURCE_FILES  ?= \
 	stationSelect.c \
 	train.c         \
 	background.c    \
-	nextStop.c
+	nextStop.c      \
+	annoucements.c
 
 # raylib library variables
 RAYLIB_SRC_PATH       ?= ../../raylib/src

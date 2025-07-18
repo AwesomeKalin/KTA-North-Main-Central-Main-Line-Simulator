@@ -27,6 +27,7 @@
 #include "background.h"
 #include "math.h"
 #include "nextStop.h"
+#include "annoucements.h"
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
@@ -286,6 +287,8 @@ static void UpdateDrawFrame(void)
     NextStopLoop();
     TextLoop(); // Last thing to process
 
+    AnnoucementLoop();
+
     if (isHoveringButton) {
         SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
     }
@@ -376,6 +379,7 @@ static void LoadGameAudio(void) {
     coin = LoadSound("resources/coin.wav");
 
     LoadTrainAudio();
+    LoadAnnoucements();
 }
 
 static void UnloadGameResources(void) {
@@ -408,6 +412,7 @@ static void UnloadGameResources(void) {
     UnloadTrainResources();
     UnloadBackgroundResources();
     UnloadNextStopResources();
+    UnloadAnnoucements();
 }
 
 static void MainMenu(void) {

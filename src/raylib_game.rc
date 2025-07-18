@@ -9,13 +9,13 @@ BEGIN
 	//BLOCK "080904E4" 	// English UK
     BLOCK "040904E4"	// English US
     BEGIN
-      VALUE "CompanyName", "raylib technologies"
-      VALUE "FileDescription", "raylib-game | A great game"
+      VALUE "CompanyName", "AwesomeKalin55"
+      VALUE "FileDescription", "KTA North Main Central Main Line Simulator"
       VALUE "FileVersion", "1.0"
       VALUE "InternalName", "raylib-game"
-      VALUE "LegalCopyright", "(c) 2025 raylib technologies (@raylibtech)"
+      VALUE "LegalCopyright", "(c) 2025 AwesomeKalin55"
       //VALUE "OriginalFilename", "raylib_app.exe"
-      VALUE "ProductName", "raylib-game"
+      VALUE "ProductName", "KTA North Main Central Main Line Simulator"
       VALUE "ProductVersion", "1.0"
     END
   END

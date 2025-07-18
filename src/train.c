@@ -73,6 +73,11 @@ void TrainLoop(void) {
 		DrawTexture(train, posX, posY, WHITE);
 
 		if (isTrainDriving) {
+            if (stationNo == (count_non_null(tempRoute, 17) - 1)) {
+                Win();
+                isTrainDriving = false;
+            }
+
 			if (!isDoorOpening && !isDoorClosing && !isDoorCloseSoundPlaying) {
 				Vector2 mouse = GetMousePosition();
 				if (speed <= 0.0f && (IsKeyPressed(KEY_SPACE) || (CheckCollisionPointRec(mouse, rectangle) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))) && !isDoorOpening) {
@@ -94,11 +99,6 @@ void TrainLoop(void) {
 
 					isDoorOpening = false;
 					openingFrames = 0;
-
-					if (stationNo == (count_non_null(tempRoute, 17) - 1)) {
-						Win();
-						isTrainDriving = false;
-					}
 				}
 				else {
 					openingFrames++;
