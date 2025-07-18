@@ -152,7 +152,7 @@ void BackgroundLoop(void) {
 
 		if (loop) {
 			if (distance > tempSP[stationNo] - 11000) thisStation = nextStation;
-			if (posX < -470 || posX > 470) {
+			if (posX < -440 || posX > 440) {
 				if ((distance < 200 || distance > tempSP[stationNo] - 7000) && distance < tempSP[stationNo]) {
 					status = 1;
 				}
@@ -181,7 +181,7 @@ void BackgroundLoop(void) {
 				}
 			}
 
-			if (clones[0].posX < -470 || clones[0].posX > 470) {
+			if (clones[0].posX < -440 || clones[0].posX > 440) {
 				if ((distance < 200 || distance > tempSP[stationNo] - 7000) && distance < tempSP[stationNo]) {
 					status = 1;
 				}
