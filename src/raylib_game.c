@@ -28,6 +28,10 @@
 #include "math.h"
 #include "nextStop.h"
 #include "annoucements.h"
+#include "raymath.h"
+
+#define MAX(a, b) ((a)>(b)? (a) : (b))
+#define MIN(a, b) ((a)<(b)? (a) : (b))
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
@@ -189,8 +193,9 @@ int tempSP[16] = { 0 };
 //----------------------------------------------------------------------------------
 // Local Variables Definition (local to this module)
 //----------------------------------------------------------------------------------
-static const int screenWidth = 480;
-static const int screenHeight = 360;
+const int screenWidth = 480;
+const int screenHeight = 360;
+static RenderTexture2D target;
 
 static Texture2D night_city_with_street_svg;
 static Texture2D unnamed;
@@ -224,8 +229,12 @@ int main(void)
 {
     // Initialization
     //---------------------------------------------------------
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(screenWidth, screenHeight, "KTA North Main, Central Main Line Simulator");
     setlocale(LC_ALL, "");
+
+    target = LoadRenderTexture(screenWidth, screenHeight);
+    SetTextureFilter(target.texture, TEXTURE_FILTER_BILINEAR);
 
     LoadGameTextures();
     font = LoadFontEx("resources/notoSans.ttf", 30, 0, 50000);
@@ -269,7 +278,19 @@ int main(void)
 // Update and draw game frame
 static void UpdateDrawFrame(void)
 {
-    BeginDrawing();
+    float scale = MIN((float)GetScreenWidth() / screenWidth, (float)GetScreenHeight() / screenHeight);
+
+    Vector2 mouse = GetMousePosition();
+    Vector2 virtualMouse = { 0 };
+    virtualMouse.x = (mouse.x - (GetScreenWidth() - (screenWidth * scale)) * 0.5f) / scale;
+    virtualMouse.y = (mouse.y - (GetScreenHeight() - (screenHeight * scale)) * 0.5f) / scale;
+    virtualMouse = Vector2Clamp(virtualMouse, (Vector2) { 0, 0 }, (Vector2) { (float)screenWidth, (float)screenHeight });
+
+    // Apply the same transformation as the virtual mouse to the real mouse (i.e. to work with raygui)
+    SetMouseOffset(-(GetScreenWidth() - (screenWidth*scale))*0.5f, -(GetScreenHeight() - (screenHeight*scale))*0.5f);
+    SetMouseScale(1/scale, 1/scale);
+
+    BeginTextureMode(target);
     ClearBackground(BLANK);
     DrawBackground();
 
@@ -296,6 +317,17 @@ static void UpdateDrawFrame(void)
         SetMouseCursor(MOUSE_CURSOR_DEFAULT);
     }
 
+    EndTextureMode();
+
+    BeginDrawing();
+    ClearBackground(BLANK);
+
+    // Draw render texture to screen, properly scaled
+    DrawTexturePro(target.texture, (Rectangle) { 0.0f, 0.0f, (float)target.texture.width, (float)-target.texture.height },
+        (Rectangle) {
+        (GetScreenWidth() - ((float)screenWidth * scale)) * 0.5f, (GetScreenHeight() - ((float)screenHeight * scale)) * 0.5f,
+            (float)screenWidth* scale, (float)screenHeight* scale
+    }, (Vector2) { 0, 0 }, 0.0f, WHITE);
     EndDrawing();
 }
 
