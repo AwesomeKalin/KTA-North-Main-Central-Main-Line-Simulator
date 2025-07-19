@@ -228,7 +228,7 @@ int main(void)
     setlocale(LC_ALL, "");
 
     LoadGameTextures();
-    font = LoadFontEx("resources/notoSans.ttf", 30, 0, 30890);
+    font = LoadFontEx("resources/notoSans.ttf", 30, 0, 50000);
 
     InitAudioDevice();      // Initialize audio device
     LoadGameAudio();

@@ -33,7 +33,6 @@ void Button2Loop(void) {
 
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				if (isSelectingRoute) {
-					SetRoute();
 					PlaySound(coin);
 					if (route > 3) {
 						route = 1;
@@ -41,6 +40,7 @@ void Button2Loop(void) {
 					else {
 						route++;
 					}
+					SetRoute();
 				}
 				else {
 					if (speed < 80.0f && isDoorOpen == false) speed += 0.2f;
