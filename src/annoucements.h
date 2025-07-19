@@ -1,5 +1,5 @@
-#ifndef BUTTON2_H
-#define BUTTON2_H
+#ifndef ANNOUCEMENTS_H
+#define ANNOUCEMENTS_H
 
 //----------------------------------------------------------------------------------
 // Global Functions Declaration
